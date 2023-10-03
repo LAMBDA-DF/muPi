@@ -19,3 +19,4 @@ equalized images ->  catalog of tracks: extract.exe
 + **takeImages.sh**: script that runs in the RPi to take raw images in DNG format
 + **raw2fits.py**: reads raw data in DNG format and produces a FITS image
 + **subFits.py**: subtracts two FITS images
++ **fits2root.py**: converts a FITS images to a ROOT TTree
