@@ -1,4 +1,4 @@
-# h1 RPi HQ camera for particle detection
+# RPi HQ camera for particle detection
 
 Set of scripts and codes to process images taken with the RPi HQ camera for particle detection
 
@@ -13,5 +13,5 @@ FITS images      ->  equalized images:
 equalized images ->  catalog of tracks: extract.exe
 ```
 
-*takeImages.sh*: script to take raw images in DNG format in the RPi
-*raw2fits.py*: reads raw data in DNG format and produces a FITS image
++ *takeImages.sh*: script to take raw images in DNG format in the RPi
++ *raw2fits.py*: reads raw data in DNG format and produces a FITS image
