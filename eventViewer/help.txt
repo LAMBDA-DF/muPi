@@ -1,0 +1,25 @@
+You can use any combination of the variables that are defined below. To combine them
+for the selection cuts you should use " && ". You can also use transformations of the
+variables such as pow(x,y), sqrt(x), etc.
+
+EG for cuts: flag==0 && E0>1 && E0<5
+EG for histogram, mean energy per pixel: E0/n0
+EG for histogram, track length: sqrt( pow(xMax-xMin, 2) + pow(yMax-yMin, 2) )
+
+List of available variables:
+  nSat:  number of saturated pixels      
+  flag:  error code      
+  xMin:  x coordinate of the leftmost pixel   
+  xMax:  x coordinate of the rightmost pixel   
+  yMin:  y coordinate of the bottommost pixel   
+  yMax:  y coordinate of the topmost pixel   
+
+  E0:    total energy of the "level 0" pixels      
+  n0:    number of "level 0" pixels           
+  xBary0: x coordinate of the signal weighted barycenter using "level 0" pixels       
+  yBary0: y coordinate of the signal weighted barycenter using "level 0" pixels 
+  xVar0:  signal weighted variance along the x direction using "level 0" pixels
+  yVar0:  signal weighted variance along the y direction using "level 0" pixels  
+  E1, n1, xBary1, yBary1, xVar1, yVar1: same as avobe but including "level 1" pixels
+  E2, n2, xBary2, yBary2, xVar2, yVar2: same as avobe but including "level 2" pixels
+  E3, n3, xBary3, yBary3, xVar3, yVar3: same as avobe but including "level 3" pixels

@@ -1,0 +1,28 @@
+
+
+<sigma
+  default="8.9"
+/>
+
+<calibration
+  default="1"
+/>
+
+
+<thr
+  seed="7"
+  add="2"
+  addRad="1"
+  skirtSize="1"
+/>
+
+<extra
+  saveTracks="1"
+  saveTrackCuts="n0>1"
+/> 
+  
+
+<systemConfig
+  stackSize="256"
+  hitMaxSize="5000"
+/>
