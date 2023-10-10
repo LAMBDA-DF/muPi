@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for g in 4; do
+for g in 1; do
 for t in 50; do
 
   for (( i = 0; i < 500; i++ )); do
