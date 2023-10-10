@@ -19,7 +19,7 @@ const int kEdgeFlag = 2;
 const int kSatFlag = 4;
 const int kBugFlag = 8;
 const int kMerFlag = 16;
-const double kSat  = 5e9;
+const double kSat  = 3600;
 
 const double kPrescan = 6;
 const float kSatValue = 1e10;

@@ -20,3 +20,15 @@ equalized images ->  catalog of tracks: extract.exe
 + **raw2fits.py**: reads raw data in DNG format and produces a FITS image
 + **subFits.py**: subtracts two FITS images
 + **fits2root.py**: converts a FITS images to a ROOT TTree
++ **fullProc.sh**: runs the full processing and reconstruction chain
+
+## Automated reconstruction
+
+To run the full processing and reconstruction chain (from raw DNG files to a ROOT catalog):
+
+```
+cd <directory where the DNG files are>
+$muPi/fullProc.sh
+```
+
+where $muPi is the directory that contains all the processing tools (this directory after clonning!)

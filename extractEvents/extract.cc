@@ -852,6 +852,7 @@ int processCommandLineArgs(const int argc, char *argv[],
   optFlag = 0;
   inFileList.clear();
   singleHdu.clear();
+  bool autoSigmaFlag = false;
   bool outFileFlag = false;
   bool maskFileFlag = false;
   int opt=0;
@@ -896,6 +897,7 @@ int processCommandLineArgs(const int argc, char *argv[],
         break;
       case 'n':
         optFlag |= kCompNS;
+        autoSigmaFlag = true;
         break;
       case 'q':
         gVerbosity = 0;
@@ -914,6 +916,11 @@ int processCommandLineArgs(const int argc, char *argv[],
   
   if(!maskFileFlag){
     cerr << yellow << "\nMask filename missing. Will use empty mask\n" << normal;
+    maskFile = "";
+  }
+
+  if(autoSigmaFlag){
+    cerr << yellow << "\nComputing sigma from each image (-n option). Will ignore <sigma> from the XML file.\n" << normal;
     maskFile = "";
   }
 

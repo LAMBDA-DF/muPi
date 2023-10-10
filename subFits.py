@@ -1,5 +1,15 @@
+#!/usr/bin/python3
 import sys
 from astropy.io import fits
+
+def printHelp(progName):
+    print("")
+    print("This program subtracts the data of the second FITS file from the first and saves")
+    print("it to a new file. The name of the output file is \"mbs_\"<file1>:\n")
+    print("Usage:")
+    print("    ",progName, " <file1> <file2>\n")
+    print("Example:")
+    print("    ",progName, " \"pepe.fits\" \"median.fits\" \"mbs_pepe.fits\"\n\n")
 
 def subtract_fits(file1, file2, output_file):
     """
@@ -29,12 +39,13 @@ def subtract_fits(file1, file2, output_file):
 
 
 if __name__ == "__main__":
-    # if len(sys.argv) != 2:
-    #     printHelp(sys.argv[0])
-    #     exit(1)
+    if len(sys.argv) != 4:
+        printHelp(sys.argv[0])
+        exit(1)
+
     inFileName1 = sys.argv[1]
     inFileName2 = sys.argv[2]
-    outFileName = "mbs_" + inFileName1
+    outFileName = sys.argv[3]
     print("Reading: ", inFileName1)
     print("Will output: ", outFileName)
     subtract_fits(inFileName1, inFileName2, outFileName)
