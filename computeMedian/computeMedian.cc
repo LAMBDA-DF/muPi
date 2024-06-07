@@ -242,10 +242,6 @@ void computeStack( vector< vector <double> > &vLinePix, vector<double> &vMedian 
 
 }
 
-static bool isLargerThan(const int &x){
-	return x>kOutlierThreshold;
-}
-
 void sortFilterAndComputeMedian( vector< vector <double> > &vLinePix, vector<double> &vMedian ){
 
   int npix = vLinePix.size();
@@ -256,27 +252,26 @@ void sortFilterAndComputeMedian( vector< vector <double> > &vLinePix, vector<dou
   #pragma omp parallel
   {
       #pragma omp for
-      for(int c=0;c<npix;++c){
-	  	vLinePix[c].erase(std::remove_if(vLinePix[c].begin(),vLinePix[c].end(), isLargerThan), vLinePix[c].end());
-		
-		const int nElementsPerPix = vLinePix[c].size();
-		bool isOdd = !!(nElementsPerPix & 1);
-		const int m = nElementsPerPix/2;
-	  	
-    	if( isOdd ){
-	        std::nth_element(vLinePix[c].begin(), vLinePix[c].begin()+vLinePix[c].size()/2, vLinePix[c].end());
-	        vMedian[c] = vLinePix[c][m];
-	    }
-	    else{
-	        std::nth_element(vLinePix[c].begin(), vLinePix[c].begin()+vLinePix[c].size()/2, vLinePix[c].end());
-	        const double highMedianVal = vLinePix[c][m];
-	        std::nth_element(vLinePix[c].begin(), vLinePix[c].begin()+vLinePix[c].size()/2-1, vLinePix[c].end());
-	        const double lowMedianVal  = vLinePix[c][m-1];
-	        vMedian[c] = (highMedianVal+lowMedianVal)/2.;
-	    }  
-      }
-	}
-	
+    for(int c=0;c<npix;++c){
+
+      const int nElementsPerPix = vLinePix[c].size();
+      bool isOdd = !!(nElementsPerPix & 1);
+      const int m = nElementsPerPix/2;
+
+      if( isOdd ){
+       std::nth_element(vLinePix[c].begin(), vLinePix[c].begin()+vLinePix[c].size()/2, vLinePix[c].end());
+       vMedian[c] = vLinePix[c][m];
+     }
+     else{
+       std::nth_element(vLinePix[c].begin(), vLinePix[c].begin()+vLinePix[c].size()/2, vLinePix[c].end());
+       const double highMedianVal = vLinePix[c][m];
+       std::nth_element(vLinePix[c].begin(), vLinePix[c].begin()+vLinePix[c].size()/2-1, vLinePix[c].end());
+       const double lowMedianVal  = vLinePix[c][m-1];
+       vMedian[c] = (highMedianVal+lowMedianVal)/2.;
+     }  
+   }
+ }
+
 }
 
 void sortFilterAndComputeMAD( vector< vector <double> > &vLinePix, vector<double> &vMAD, const string kMode = ""){
@@ -559,7 +554,7 @@ int computeMedianImages(const vector<string> inFileList, const char *outF, const
     double nulval = 0.;
     fits_movabs_hdu(outfptr, nOut, &hdutype, &status);
     for (int i = 0; i < 9; ++i) naxes[i] = 1;
-    fits_get_img_param(outfptr, 9, &bitpix, &naxis, naxes, &status);
+      fits_get_img_param(outfptr, 9, &bitpix, &naxis, naxes, &status);
     long totpix = naxes[0] * naxes[1];
     
     /* Don't try to process data if the hdu is empty */    
@@ -574,8 +569,8 @@ int computeMedianImages(const vector<string> inFileList, const char *outF, const
     char* outArray = new char[totpix*bytepix];
     
     for(int i=0;i<totpix*bytepix;++i) outArray[i] = 0;
-    
-    const long npixStart = naxes[0]*kReadNLines;
+      
+      const long npixStart = naxes[0]*kReadNLines;
     long npix = npixStart;
     long pixelsLeft = totpix;
     
@@ -616,7 +611,7 @@ int computeMedianImages(const vector<string> inFileList, const char *outF, const
 
         for(int c=0;c<npix;++c) vLinePix[c][r] = lArray[c];
 
-        delete[] lArray;
+          delete[] lArray;
         fits_close_file(infPtrs[r], &status);
       }
       
@@ -631,46 +626,46 @@ int computeMedianImages(const vector<string> inFileList, const char *outF, const
       else if(kMode == "STACK")
         computeStack( vLinePix, vMedian );
       else{
-	cerr << "Invalid mode!\n";
-	return -1001;
-      }
-      
-      if(bytepix==4){
-        for(int c=0;c<npix;++c) reinterpret_cast<float *> (outArray)[l*npixStart + c] = vMedian[c];
-      }
-      else if(bytepix==8){
-        for(int c=0;c<npix;++c) reinterpret_cast<double *>(outArray)[l*npixStart + c] = vMedian[c];
-      }
-      pixelsLeft-=npix;
+       cerr << "Invalid mode!\n";
+       return -1001;
+     }
+     
+     if(bytepix==4){
+      for(int c=0;c<npix;++c) reinterpret_cast<float *> (outArray)[l*npixStart + c] = vMedian[c];
     }
-    
-    fits_set_bscale(outfptr, 1., 0., &status);/* Set rescale to pixel = 1*pixel_value + 0 for output file*/
-    if(bytepix==4)      fits_write_img(outfptr, TFLOAT, 1, totpix, reinterpret_cast<float *>(outArray), &status);
-    else if(bytepix==8) fits_write_img(outfptr, TDOUBLE, 1, totpix, reinterpret_cast<double *>(outArray), &status);
-    delete[] outArray;
-    
-    /* quit if only copying a single HDU */
-    if (single) break;
+  else if(bytepix==8){
+    for(int c=0;c<npix;++c) reinterpret_cast<double *>(outArray)[l*npixStart + c] = vMedian[c];
   }
-  
+pixelsLeft-=npix;
+}
+
+    fits_set_bscale(outfptr, 1., 0., &status);/* Set rescale to pixel = 1*pixel_value + 0 for output file*/
+if(bytepix==4)      fits_write_img(outfptr, TFLOAT, 1, totpix, reinterpret_cast<float *>(outArray), &status);
+else if(bytepix==8) fits_write_img(outfptr, TDOUBLE, 1, totpix, reinterpret_cast<double *>(outArray), &status);
+delete[] outArray;
+
+    /* quit if only copying a single HDU */
+if (single) break;
+}
+
   /* Close the input files */
 //   for(int f=0; f<nFiles; ++f){
 //     fits_close_file(infPtrs[f], &status);
 //   }
-  
+
   /* Close the output file */
-  fits_close_file(outfptr,  &status);
-  
-  if(gVerbosity){
-    showProgress(1,1);
-    cout << endl;
-  }
-  if(kMode == "Median")
-    cout << green << "Median file computed.\n\n" << normal;
-  else if(kMode == "MAD")
-    cout << green << "MAD file computed.\n\n" << normal;
-  
-  return(status);
+fits_close_file(outfptr,  &status);
+
+if(gVerbosity){
+  showProgress(1,1);
+  cout << endl;
+}
+if(kMode == "Median")
+  cout << green << "Median file computed.\n\n" << normal;
+else if(kMode == "MAD")
+  cout << green << "MAD file computed.\n\n" << normal;
+
+return(status);
 }
 
 void checkArch(){
@@ -801,7 +796,7 @@ int main(int argc, char *argv[])
     cout << endl << bold << "Mode: " << kMode << normal << endl;
     cout << bold << "\nWill read the following files:\n" << normal;
     for(unsigned int i=0; i<inFileList.size();++i) cout << "\t" << inFileList[i] << endl;
-    cout << bold << "\nThe output will be saved in the file:\n\t" << normal << outFile << endl;
+      cout << bold << "\nThe output will be saved in the file:\n\t" << normal << outFile << endl;
   }
   
   /* Check if input images are compatible in size, exposure time, etc.. */

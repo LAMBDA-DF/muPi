@@ -31,8 +31,8 @@ def subtract_fits(file1, file2, output_file):
         
         result_data = data1 - data2
         
-        # Create a new HDU with the subtracted data
-        hdu = fits.PrimaryHDU(result_data)
+        # Create a new HDU with the subtracted data and copy the header from the first file
+        hdu = fits.PrimaryHDU(result_data, header=hdul1[0].header)
         
         # Save to output file
         hdu.writeto(output_file, overwrite=True)
@@ -49,4 +49,3 @@ if __name__ == "__main__":
     print("Reading: ", inFileName1)
     print("Will output: ", outFileName)
     subtract_fits(inFileName1, inFileName2, outFileName)
-    
