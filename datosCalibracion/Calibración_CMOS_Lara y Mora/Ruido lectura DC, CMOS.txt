@@ -1,0 +1,10 @@
+Cálculo del error de lectura:
+
+Tomamos 20 imágenes con tiempo de exposición de 0s (con la cámara tapada).
+A cada imagen le calculamos la varianza muestral y calculamos la varianza promedio muestral, Var(k).
+Calculamos  𝞼²(e)=Var(e)=Var(k)*g².
+
+Obtuvimos: 
+
+𝞼²=9.36
+𝞼(e)=3.06  --------> es el error de lectura
