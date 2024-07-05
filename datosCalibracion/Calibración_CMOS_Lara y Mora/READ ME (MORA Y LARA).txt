@@ -1,0 +1,14 @@
+GUÍA DE USO DE LOS TXT DE MORA Y LARA 
+
+En la carpeta hay 7 archivos .txt (sin contar este). Cada uno de ellos contiene 6 columnas: Tiempo de exposición(s), Varianza total(ADU), Varianza blue(ADU), Varianza green2(ADU), Varianza green3(ADU) y Varianza red(ADU). Las últimas 4 corresponden a la varianza de cada uno de los tipo de píxel por separado suponiendo que los tenemos organizados en la siguiente disposición espacial:
+| B G1|
+|G2 R |
+
+Los archivos se dividen en dos categorías, temperatura controlada y ambiente (no controlada):
+	-->Los que tienen temperatura escrita (°C) en el nombre fueron realizadas con condiciones de temperatura controlada a 1°C, 10°C y 17°C respectivamente.
+	   estos datos no tienen filtrados los outliers y fueron tomados en su totalidad sin el filtro infrarrojo.
+	-->Los que dicen "Amb" al final del nombre corresponden a la misma medición realizada sin controlar la temperatura. Las distintas variables de este 
+	   nombre corresponden a 3 filtros que se realizaron para excluir outliers de las mediciones: "99.95" y "99.993" corresponden a dos filtros 		
+	   porcentuales que se aplicaron a los datos, "a mano" corresponde a un filtro manual en el cual se seleccionaron los datos que se iban a sacar mirando
+	   el histograma de la distrbución. Las mediciones correspondientes a estos .txt fueron medidos antes de remover el filtro infrarrojo.
+
