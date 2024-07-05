@@ -12,3 +12,4 @@ Los archivos se dividen en dos categorías, temperatura controlada y ambiente (n
 	   porcentuales que se aplicaron a los datos, "a mano" corresponde a un filtro manual en el cual se seleccionaron los datos que se iban a sacar mirando
 	   el histograma de la distrbución. Las mediciones correspondientes a estos .txt fueron medidos antes de remover el filtro infrarrojo.
 
+Después, las carpetas que se llaman "Temperatura**_FITS_raw" simplemente son eso: son los fits para distintos tiempo de exposición, a distintas temperaturas. Como antes, los archivos que tienen temperatura 1,10,17, son con la cámara CMOS sin filtro IR. El barrido para T Amb, fue realizado con el filtro IR.
