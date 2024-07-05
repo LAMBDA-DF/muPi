@@ -1,6 +1,8 @@
 GUÍA DE USO DE LOS TXT DE MORA Y LARA (caracterización DC CMOS)
 
-En la carpeta hay 7 archivos .txt (sin contar este). Cada uno de ellos contiene 6 columnas: Tiempo de exposición(s), Varianza total(ADU), Varianza blue(ADU), Varianza green2(ADU), Varianza green3(ADU) y Varianza red(ADU). Las últimas 4 corresponden a la varianza de cada uno de los tipo de píxel por separado suponiendo que los tenemos organizados en la siguiente disposición espacial:
+En la carpeta hay 8 archivos .txt (sin contar este). Uno contiene el ruido de lectura de la CMOS junto a la metodología para su cálculo.
+
+Los restantes: cada uno de ellos contiene 6 columnas: Tiempo de exposición(s), Varianza total(ADU), Varianza blue(ADU), Varianza green2(ADU), Varianza green3(ADU) y Varianza red(ADU). Las últimas 4 corresponden a la varianza de cada uno de los tipo de píxel por separado suponiendo que los tenemos organizados en la siguiente disposición espacial:
 | B G1|
 |G2 R |
 
